@@ -1,5 +1,9 @@
 package contorollers
 
+var (
+	UsersController usersControllerInterface = &usersController{}
+)
+
 type usersControllerInterface interface {
 	CreateUser()
 }
@@ -7,6 +11,6 @@ type usersControllerInterface interface {
 type usersController struct {
 }
 
-func CreateUser() {
+func (c *usersController) CreateUser() {
 
 }
