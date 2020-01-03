@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/IkezawaYuki/videostore_items-api/clients/elasticsearch"
 	"github.com/gorilla/mux"
 	"net/http"
 	"time"
@@ -11,13 +12,16 @@ var (
 )
 
 func StartApplication() {
+	elasticsearch.Init()
+
 	mapUrls()
 
 	srv := &http.Server{
 		Addr:         "127.0.0.1:8080",
 		Handler:      router,
-		ReadTimeout:  15 * time.Second,
-		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  2 * time.Second,
+		WriteTimeout: 500 * time.Second,
+		IdleTimeout:  60 * time.Second,
 	}
 	if err := srv.ListenAndServe(); err != nil {
 		panic(err)

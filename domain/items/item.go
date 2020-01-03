@@ -9,6 +9,7 @@ type Item struct {
 	Seller            int64       `json:"seller"`
 	Title             string      `json:"title"`
 	Description       Description `json:"description"`
+	Pictures          []Picture   `json:"pictures"`
 	Video             string      `json:"video"`
 	Price             float32     `json:"price"`
 	AvailableQuantity int         `json:"available_quantity"`
