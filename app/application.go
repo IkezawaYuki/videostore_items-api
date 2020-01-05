@@ -17,7 +17,7 @@ func StartApplication() {
 	mapUrls()
 
 	srv := &http.Server{
-		Addr:         "127.0.0.1:8080",
+		Addr:         "127.0.0.1:8081",
 		Handler:      router,
 		ReadTimeout:  2 * time.Second,
 		WriteTimeout: 500 * time.Second,
