@@ -7,8 +7,10 @@ import (
 	"github.com/IkezawaYuki/videostore_items-api/utils/http_utils"
 	"github.com/IkezawaYuki/videostore_oauth-go/oauth"
 	"github.com/IkezawaYuki/videostore_utils-go/rest_errors"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 var (
@@ -56,11 +58,17 @@ func (c *itemsController) Create(w http.ResponseWriter, r *http.Request) {
 		http_utils.RespondError(w, createErr)
 		return
 	}
-
 	http_utils.RespondJson(w, http.StatusCreated, result)
-
 }
 
 func (c *itemsController) Get(w http.ResponseWriter, r *http.Request) {
-	return
+	vars := mux.Vars(r)
+	itemId := strings.TrimSpace(vars["id"])
+
+	item, err := services.ItemsService.Get(itemId)
+	if err != nil {
+		http_utils.RespondError(w, err)
+		return
+	}
+	http_utils.RespondJson(w, http.StatusOK, item)
 }
