@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/IkezawaYuki/videostore_items-api/clients/elasticsearch"
+	"github.com/IkezawaYuki/videostore_items-api/domain/queries"
 	"github.com/IkezawaYuki/videostore_utils-go/rest_errors"
 )
 
@@ -45,4 +46,13 @@ func (i *Item) Get() rest_errors.RestErr {
 	}
 	i.ID = itemID
 	return nil
+}
+
+func (i *Item) Search(query queries.EsQuery) ([]Item, rest_errors.RestErr) {
+	result, err := elasticsearch.Client.Search(indexItems, query.Build())
+	if err != nil {
+		return nil, rest_errors.NewInternalServerError("error when trying to search documents", errors.New("database error"))
+	}
+	fmt.Println(result)
+	return nil, nil
 }

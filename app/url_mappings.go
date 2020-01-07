@@ -10,4 +10,5 @@ func mapUrls() {
 
 	router.HandleFunc("/items", contorollers.ItemsController.Create).Methods(http.MethodPost)
 	router.HandleFunc("/items/{id}", contorollers.ItemsController.Get).Methods(http.MethodGet)
+	router.HandleFunc("/items/search", contorollers.ItemsController.Search).Methods(http.MethodGet)
 }
