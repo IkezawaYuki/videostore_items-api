@@ -71,7 +71,11 @@ func (c *esClient) Get(index string, docType string, id string) (*elastic.GetRes
 
 func (c *esClient) Search(index string, query elastic.Query) (*elastic.SearchResult, error) {
 	ctx := context.Background()
-	result, err := c.client.Search(index).Query(query).Do(ctx)
+	if err := c.client.Search(index).Query(query).Validate(); err != nil {
+		fmt.Println("result: " + err.Error())
+		return nil, err
+	}
+	result, err := c.client.Search(index).Query(query).RestTotalHitsAsInt(true).Do(ctx)
 	if err != nil {
 		logger.Error(fmt.Sprintf("error when trying to search documents in index %s", index), err)
 		return nil, err
